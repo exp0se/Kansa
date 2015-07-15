@@ -1,6 +1,7 @@
 ﻿<# 
 .SYNOPSIS
-Get-File.ps1 retrieves the user specified file.
+Get-File.ps1 retrieves the user specified file. 
+Use it to read files NOT to DOWNLOAD.
 .PARAMETER File
 A recommended parameter, a sensible default is provided, that points to
 the file you want to acquire from remote systems.

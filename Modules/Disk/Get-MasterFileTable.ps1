@@ -19,7 +19,7 @@ Get-MasterFileTable.ps1 -Disk 0 -Partition 1
 
 Returns an object with the files from the second partition of the first disk.
 .NOTES
-OUTPUT TSV
+OUTPUT CSV
 
 When passing specific modules with parameters via Kansa.ps1's -ModulePath 
 parameter, be sure to quote the entire string, like shown here:
