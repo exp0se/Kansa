@@ -6,7 +6,7 @@ commandline arguments, process start time, parent process id
 and md5 hash of the processes image as found on disk.
 .NOTES
 Kansa.ps1 output directive follows
-OUTPUT tsv
+OUTPUT csv
 #>
 
 $hashtype = "MD5"
@@ -64,15 +64,9 @@ foreach($item in (Get-WmiObject -Query "Select * from win32_process")) {
     } Catch {
         $username = "Unobtainable"
     }
-    Try {
-        $SId = $item.GetOwner().SId
-    } Catch {
-        $SId = "Unobtainable"
-    }
     $username = ($domain + "\" + $username)
     $item | Add-Member -Type NoteProperty -Name "Hash" -Value $hash
     $item.CommandLine = $item.CommandLine -Replace "`n", " " -replace '\s\s*', ' '
 	$item | Add-Member -Type NoteProperty -Name "Username" -Value $username
-	$item | Add-Member -Type NoteProperty -Name "SID" -Value  $SId
-    $item
+    $item | Select ProcessId, CreationDate, Name, Username, CommandLine, ExecutablePath, Hash, Handle, ParentProcessId
 }

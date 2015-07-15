@@ -139,6 +139,8 @@ An optional flag that causes Start-Transcript to run at the start
 of the script, writing to $OutputPath\yyyyMMddhhmmss.log
 .PARAMETER Quiet
 An optional flag that overrides Kansa's default of running with -Verbose.
+.PARAMETER WantHtml
+Optional. Use this if you want html report too in addition to standard OUTPUT.
 .INPUTS
 None
 You cannot pipe objects to this cmdlet
@@ -233,7 +235,9 @@ Param(
     [Parameter(Mandatory=$False,Position=13)]
         [Switch]$Transcribe,
     [Parameter(Mandatory=$False,Position=14)]
-        [Switch]$Quiet=$False
+        [Switch]$Quiet=$False,
+    [Parameter(Mandatory=$False,Position=15)]
+        [Switch]$WantHtml=$False
 )
 
 # Opening with a Try so the Finally block at the bottom will always call
@@ -629,7 +633,8 @@ Param(
                 "ERROR: ${GetlessMod}'s output path length exceeds 260 character limit. Can't write the output to disk for $($ChildJob.Location)." | Add-Content -Encoding $Encoding $ErrorLog
                 Continue
             }
-
+            # saved variable for -WantHtml
+            $Outfile_html = $Outfile + ".html"
             # save the data
             switch -Wildcard ($OutputMethod) {
                 "*csv" {
@@ -661,10 +666,25 @@ Param(
                     $Outfile = $Outfile
                     $Recpt | Set-Content -Encoding Default $Outfile
                 }
+                "*json" {
+                    #json 
+                    $Outfile = $Outfile + ".json"
+                    $Recpt | ConvertTo-Json | Set-Content -Encoding $Encoding $Outfile
+                }
+                "*html" {
+                    #html
+                    $Outfile = $Outfile + ".html"
+                    $Recpt | ConvertTo-Html | Set-Content -Encoding $Encoding $Outfile
+                }
                 default {
                     $Outfile = $Outfile + ".txt"
                     $Recpt | Set-Content -Encoding $Encoding $Outfile
                 }
+            }
+            # -WantHtml 
+            # Html report in addition to OUTPUT directive
+            if ($WantHtml) {
+                $Recpt |ConvertTo-Html | Set-Content -Encoding $Encoding $Outfile_html
             }
         }
 
