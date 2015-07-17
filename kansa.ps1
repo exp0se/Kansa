@@ -708,6 +708,7 @@ Param(
 
 function Push-Bindep {
 <#
+
 .SYNOPSIS
 Attempts to copy required binaries to targets.
 If a module depends on an external binary, the binary should be copied 

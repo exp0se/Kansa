@@ -29,4 +29,7 @@ Param(
 
 if (Test-Path($File)) {
     Get-Content -ReadCount 0 -Raw $File
+}
+else {
+	Write-Error "$File is not found"
 }  

@@ -2,7 +2,8 @@
 .SYNOPSIS
 Get-MasterFileTable.ps1 leverages the Win32 device namespace to access the raw
 filesystem. This bypasses file locks, attributes, and access control lists;
-enabling access to the MFT from an elevated user session.
+enabling access to the MFT from an elevated user session. Use with caution as 
+it's resource intensive and take a long time to finish. 
 .PARAMETER Disk
 Required if Partition is passed, otherwise optional. Restricts the module to
 a single phyisical disk. By default, it enumerates the MFT on all partitions on

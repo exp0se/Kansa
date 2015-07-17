@@ -5,9 +5,7 @@ Get-FileHashes.ps1 hashes all files in the provided path.
 Mandatory. Limit your search to specific parent directories. When running stand-
 alone, this can be an array. Kansa currenlty accepts only a sinlge path. 
 .PARAMETER HashType
-Optional. You can use multiple hashing algorithms simultaniously.
-Like this - ("MD5", "SHA256").
- Defaults to SHA-256.
+Optional. Hash type you want to use. Defaults to SHA-256.
 .PARAMETER extRegex
 Optional but highly recommended. Files must match the regex to be hashed. 
 Default is .(exe|sys|dll|ps1)$
@@ -16,7 +14,7 @@ OUTPUT csv
 
 When passing specific modules with parameters via Kansa.ps1's -ModulePath 
 parameter, be sure to quote the entire string, like shown here:
-.\kansa.ps1 -ModulePath ".\Modules\Disk\Get-FileHashes.ps1 MD5,C:\,\.ps1$"
+.\kansa.ps1 -ModulePath ".\Modules\Disk\Get-FileHashes.ps1 C:\,MD5,\.ps1$"
 
 As with all modules that take command line parameters, you should not put
 quotes around the entry in the Modules.conf file.
@@ -153,8 +151,8 @@ function Get-FileHashCustom {
 }
 
 if (Test-Path $BasePath) {
-Get-ChildItem -Path $BasePath -Recurse |Where-Object {$_.Name -match $extRegex}| Get-FileHashCustom -Algorithm $HashType -ErrorAction SilentlyContinue
+	Get-ChildItem -Path $BasePath -Recurse |Where-Object {$_.Name -match $extRegex}| Get-FileHashCustom -Algorithm $HashType -ErrorAction SilentlyContinue
 }
 else {
-Exit
+	Write-Error "$BasePath is not found"
 }

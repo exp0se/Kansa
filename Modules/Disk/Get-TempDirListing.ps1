@@ -3,7 +3,7 @@
 Get-TempDirListing.ps1 returns listing of common temp directories.
 .NOTES
 Next line is required by kansa.ps1 for proper handling of script output
-OUTPUT tsv
+OUTPUT csv
 #>
 
 foreach($userpath in (Get-WmiObject win32_userprofile | Select-Object -ExpandProperty localpath)) {
