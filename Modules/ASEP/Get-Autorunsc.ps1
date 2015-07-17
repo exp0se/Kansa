@@ -22,7 +22,7 @@ runs, obviating the need to run with -Pushbin in the future.
 The following lines are required by Kansa.ps1. They are directives that
 tell Kansa how to treat the output of this script and where to find the
 binary that this script depends on.
-OUTPUT tsv
+OUTPUT csv
 BINDEP .\Modules\bin\Autorunsc.exe
 
 !!THIS SCRIPT ASSUMES AUTORUNSC.EXE WILL BE IN $ENV:SYSTEMROOT!!
@@ -32,12 +32,31 @@ This script parses it pretty well, but there are still some things that
 are incorrectly parsed. As I have time, I'll see about resolving the 
 troublesome entries, one in particular is for items that don't have 
 time stamps.
+.EXAMPLE
+By default it will check everything on VT and hide signed files.
+To get all information without checking on VT pass All parameter.
+.\kansa.ps1 -Target Comp -Credential $Credential -ModulePath ".\Modules\ASEP\Get-Autorunsc.ps1 All"
 #>
-
-if (Test-Path "$env:SystemRoot\Autorunsc.exe") {
-    & $env:SystemRoot\Autorunsc.exe /accepteula -a * -c -h -s '*' 2> $null | ConvertFrom-Csv | ForEach-Object {
-        $_
-    }
-} else {
-    Write-Error "Autorunsc.exe not found in $env:SystemRoot."
+[CmdletBinding()]
+Param(
+	[Parameter(Mandatory=$False,Position=0)]
+    [String]$All="NotAll"
+)
+if ($All -eq "All") {
+	if (Test-Path "$env:SystemRoot\Autorunsc.exe") {
+		& $env:SystemRoot\Autorunsc.exe /accepteula -a * -c -h -s '*' 2> $null | ConvertFrom-Csv | ForEach-Object {
+			$_
+		}
+	} else {
+		Write-Error "Autorunsc.exe not found in $env:SystemRoot."
+	}
+}
+else {
+	if (Test-Path "$env:SystemRoot\Autorunsc.exe") {
+		& $env:SystemRoot\Autorunsc.exe /accepteula -a * -c -h -vt -v -m -s '*' 2> $null | ConvertFrom-Csv | ForEach-Object {
+			$_
+		}
+	} else {
+		Write-Error "Autorunsc.exe not found in $env:SystemRoot."
+	}
 }
