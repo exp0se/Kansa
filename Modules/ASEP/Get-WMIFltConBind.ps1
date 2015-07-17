@@ -6,6 +6,6 @@ Consumers, which have been used by malware as a persistence mechanism
 .NOTES
 The following line is an OUPUT directive used by kansa.ps1 to determine
 how this scripts output should be handled.
-OUTPUT TSV
+OUTPUT CSV
 #>
 Get-WmiObject -Namespace root\subscription -Query "select * from __FilterToConsumerBinding"

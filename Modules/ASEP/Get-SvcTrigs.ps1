@@ -5,7 +5,7 @@ could be used as a persistence mechanism.
 .NOTES
 The following line is needed by Kansa.ps1 to determine how to treat the
 output of this script.
-OUTPUT tsv
+OUTPUT csv
 #>
 
 $svctrigs = & $env:windir\system32\sc.exe query | ForEach-Object {

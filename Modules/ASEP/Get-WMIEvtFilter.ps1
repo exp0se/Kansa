@@ -9,6 +9,6 @@ for maintaining persistence.
 .NOTES
 The following line is used by Kansa.ps1 to determine how to treat the
 output from this script.
-OUTPUT TSV
+OUTPUT CSV
 #>
 Get-WmiObject -Namespace root\subscription -Query "select * from __EventFilter"

@@ -5,7 +5,7 @@ options, which could be used as a persistence mechanism by adversaries.
 .NOTES
 The following line is required by kansa.ps1. Kansa uses it to determine
 how to handle the ouput from this script.
-OUTPUT tsv
+OUTPUT csv
 #>
 
 $data = & $env:windir\system32\sc query | ForEach-Object {

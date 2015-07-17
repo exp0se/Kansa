@@ -28,7 +28,7 @@ function add-zip
 }
 
 $zipfile = (($env:TEMP) + "\" + ($env:COMPUTERNAME) + "-PSProfiles.zip")
-if (Test-Path $zipfile) { rm $zipfile -Force }
+#if (Test-Path $zipfile) { rm $zipfile -Force }
 
 Get-WmiObject win32_userprofile | Select-Object -ExpandProperty LocalPath | ForEach-Object {
     $path = $_

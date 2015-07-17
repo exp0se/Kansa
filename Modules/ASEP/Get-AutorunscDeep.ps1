@@ -39,7 +39,7 @@ runs, obviating the need to run with -Pushbin in the future.
 The following lines are required by Kansa.ps1. They are directives that
 tell Kansa how to treat the output of this script and where to find the
 binary that this script depends on.
-OUTPUT tsv
+OUTPUT CSV
 BINDEP .\Modules\bin\Autorunsc.exe
 
 !!THIS SCRIPT ASSUMES AUTORUNSC.EXE WILL BE IN $ENV:SYSTEMROOT!!

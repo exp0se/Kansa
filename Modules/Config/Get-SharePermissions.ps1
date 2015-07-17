@@ -3,7 +3,7 @@
 Get-SharePermissions.ps1 enumerates the SMB shares on the target host and lists
 the share and NTFS access rights for them.
 .NOTES
-OUTPUT TSV
+OUTPUT CSV
 #>
 [CmdletBinding()]
 Param(

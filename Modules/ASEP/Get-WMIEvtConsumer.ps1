@@ -8,6 +8,6 @@ persistence.
 .NOTES
 The following line is used by Kansa.ps1 to determine how ouptut from
 this script should be handled.
-OUTPUT TSV
+OUTPUT CSV
 #>
 get-wmiobject -namespace root\subscription -query "select * from __EventConsumer"
