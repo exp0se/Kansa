@@ -34,16 +34,16 @@ BINDEP .\Modules\bin\Procdump.exe
 
 [CmdletBinding()]
 Param(
-    [Parameter(Mandatory=$False,Position=0)]
-        [Int]$ProcId=$pid
+    [Parameter(Mandatory=$True,Position=0)]
+        [Int]$ProcId
 )
 
-if (Test-Path "$env:SystemRoot\Procdump.exe") {
-    $PDOutput = & $env:SystemRoot\Procdump.exe /accepteula $ProcId 2> $null
+if (Test-Path "$env:SystemRoot\procdump.exe") {
+    $PDOutput = & $env:SystemRoot\procdump.exe /accepteula $ProcId 2> $null
     foreach($line in $PDOutput) {
-        if ($line -match 'Writing dump file (.*\.dmp) ...') {
-            Get-Content -ReadCount 0 -Raw -Encoding Byte $($matches[1])
-            Remove-Item $($matches[1])
+        if ($line -match 'Complete') {
+            Get-Content -ReadCount 0 -Raw -Encoding Byte *dmp
+            Remove-Item *dmp
         }
     }
 }
